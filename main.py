@@ -1,38 +1,36 @@
-from ursina import *
-from ursina.prefabs.first_person_controller import FirstPersonController
-
-app = Ursina()
-
-class Voxel(Button):
-    def __init__(self, position=(0, 0, 0), **kwargs):
-        super().__init__(
-            parent=scene,
-            position=position,
-            model='cube',
-            origin_y=0.5,
-            texture='white_cube',
-            color=color.color(255, 255, 255),
-            highlight_color=color.azure,
-            **kwargs
-        )
-
-    def input(self, key):
-        if self.hovered:
-            if key == 'left mouse down':
-                voxel = Voxel(position=self.position + mouse.normal)
-            if key == 'right mouse down':
-                destroy(self)
+from libraries import *
 
 
+def main():
+    if not glfw.init():
+        return
 
-for z in range(20):
-    for x in range(20):
-        voxel = Voxel(position=(x, 0, z))
+    width, height = 800, 600
+    window = glfw.create_window(width, height, "OpenGL Window", None, None)
 
-player = FirstPersonController()
+    if not window:
+        glfw.terminate()
+        return
 
+    glfw.make_context_current(window)
+    glfw.set_key_callback(window, key_callback)
 
+    glEnable(GL_DEPTH_TEST)
+    gluPerspective(45, (width / height), 0.1, 50.0)
+    glTranslatef(0.0, 0.0, -10)
 
-sky = Sky()
+    while not glfw.window_should_close(window):
+        glfw.poll_events()
 
-app.run()
+       
+        continue_state()
+       
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+        draw_cube()
+
+        glfw.swap_buffers(window)
+
+    glfw.terminate()
+
+if __name__ == "__main__":
+    main()
