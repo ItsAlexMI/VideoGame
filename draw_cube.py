@@ -45,18 +45,23 @@ colors = (
     (1, 0, 1)
 )
 
-def draw_cube():
+def draw_cube(x, y, z):
     glBegin(GL_QUADS)
     for i, surface in enumerate(surfaces):
         glColor3fv(colors[i])
         for vertex in surface:
-            glVertex3fv(vertices[vertex])
+            # Ajusta las coordenadas del vértice según la posición del cubo
+            glVertex3f(vertices[vertex][0] + x,
+                       vertices[vertex][1] + y,
+                       vertices[vertex][2] + z)
     glEnd()
 
     glColor3f(0, 0, 0)
     glBegin(GL_LINES)
     for edge in edges:
         for vertex in edge:
-            glVertex3fv(vertices[vertex])
+            # Ajusta las coordenadas del vértice según la posición del cubo
+            glVertex3f(vertices[vertex][0] + x,
+                       vertices[vertex][1] + y,
+                       vertices[vertex][2] + z)
     glEnd()
-
