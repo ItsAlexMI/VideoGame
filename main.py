@@ -1,10 +1,5 @@
 from libraries import *
 
-
-
-
-
-
 def main():
     if not glfw.init():
         return
