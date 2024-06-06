@@ -6,10 +6,6 @@ from OpenGL.GLUT import *
 import numpy as np
 from libraries import *
 
-
-
-
-
 def main():
     if not glfw.init():
         return
