@@ -1,56 +1,106 @@
-from libraries import *
+import pygame as pg
+import moderngl as mgl
+import sys
+from model import *
+from camera import Camera
+from light import Light
+from mesh import Mesh
+from scene import Scene
+from scene_renderer import SceneRenderer
 
-def main():
-    if not glfw.init():
-        return
 
-    width, height = 800, 600
-    window = glfw.create_window(width, height, "OpenGL Window", None, None)
+class GraphicsEngine:
+    def __init__(self, win_size=(1080, 720)):
+        # init pygame modules
+        pg.init()
+        # window size
+        self.WIN_SIZE = win_size
+        # set opengl attr
+        pg.display.gl_set_attribute(pg.GL_CONTEXT_MAJOR_VERSION, 3)
+        pg.display.gl_set_attribute(pg.GL_CONTEXT_MINOR_VERSION, 3)
+        pg.display.gl_set_attribute(pg.GL_CONTEXT_PROFILE_MASK, pg.GL_CONTEXT_PROFILE_CORE)
+        # create opengl context
+        pg.display.set_mode(self.WIN_SIZE, flags=pg.OPENGL | pg.DOUBLEBUF)
+        # mouse settings
+        pg.event.set_grab(True)
+        pg.mouse.set_visible(False)
+        # detect and use existing opengl context
+        self.ctx = mgl.create_context()
+        # self.ctx.front_face = 'cw'
+        self.ctx.enable(flags=mgl.DEPTH_TEST | mgl.CULL_FACE)
+        # create an object to help track time
+        self.clock = pg.time.Clock()
+        self.time = 0
+        self.delta_time = 0
+        # light
+        self.light = Light()
+        # camera
+        self.camera = Camera(self)
+        # mesh
+        self.mesh = Mesh(self)
+        # scene
+        self.scene = Scene(self)
+        # renderer
+        self.scene_renderer = SceneRenderer(self)
 
-    if not window:
-        glfw.terminate()
-        return
+    def check_events(self):
+        for event in pg.event.get():
+            if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
+                self.mesh.destroy()
+                self.scene_renderer.destroy()
+                pg.quit()
+                sys.exit()
 
-    glfw.make_context_current(window)
-    glfw.set_key_callback(window, key_callback)
+    def render(self):
+        # clear framebuffer
+        self.ctx.clear(color=(0.08, 0.16, 0.18))
+        # render scene
+        self.scene_renderer.render()
+        # swap buffers
+        pg.display.flip()
 
-    camera = Camera(width, height, glm.vec3(0.0, 0.0, 10.0))  # Ajustamos la posición de la cámara
+    def get_time(self):
+        self.time = pg.time.get_ticks() * 0.001
 
-    texture = Texture("resource\image.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE)
+    def run(self):
+        while True:
+            self.get_time()
+            self.check_events()
+            self.camera.update()
+            self.render()
+            self.delta_time = self.clock.tick(60)
 
-    glEnable(GL_DEPTH_TEST)
-    glEnable(GL_TEXTURE_2D)
-    glMatrixMode(GL_PROJECTION)
-    gluPerspective(0.0, -3.0, 3.0, 0.0) # Ajustamos la perspectiva
-    glMatrixMode(GL_MODELVIEW)
-    glTranslatef(0.0, 0.0, -10)
 
-    while not glfw.window_should_close(window):
-        glfw.poll_events()
+if __name__ == '__main__':
+    app = GraphicsEngine()
+    app.run()
 
-        continue_state(camera)
-        camera.Inputs(window)
-        camera.updateMatrix(45, 0.1, 100)
 
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-        
-        camera_matrix_flat = np.array(camera.cameraMatrix, dtype=np.float32)
-        camera_matrix_flat = np.transpose(camera_matrix_flat)
-        glLoadMatrixf(camera_matrix_flat)
 
-        num_cubes_x = 10  # Número de cubos en el eje x
-        num_cubes_z = 5  # Número de cubos en el eje z
-        cube_spacing = 1.5  # Espacio entre los cubos
 
-        for i in range(num_cubes_x):
-            for j in range(num_cubes_z):
-                x = i * cube_spacing
-                z = j * cube_spacing
-                draw_cube(x, 0, z, texture)
 
-        glfw.swap_buffers(window)
 
-    glfw.terminate()
 
-if __name__ == "__main__":
-    main()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
