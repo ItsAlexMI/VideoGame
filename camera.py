@@ -1,11 +1,14 @@
 import glm
 import pygame as pg
+import math
+import time
+from aabb import AABB
 
 FOV = 50  # deg
 NEAR = 0.1
 FAR = 100
 SPEED = 0.005
-SENSITIVITY = 0.04
+SENSITIVITY = 0.03
 
 
 class Camera:
@@ -18,10 +21,15 @@ class Camera:
         self.forward = glm.vec3(0, 0, -1)
         self.yaw = yaw
         self.pitch = pitch
-        # view matrix
+        self.size = glm.vec3(1, 2, 1)  # Tamaño del jugador
+        self.aabb = AABB(self.position - self.size / 2, self.position + self.size / 2)
         self.m_view = self.get_view_matrix()
-        # projection matrix
         self.m_proj = self.get_projection_matrix()
+
+        # Variables para el salto
+        self.is_jumping = False
+        self.jump_start_time = None
+        self.jump_start_y = 0.0
 
     def rotate(self):
         rel_x, rel_y = pg.mouse.get_rel()
@@ -49,41 +57,77 @@ class Camera:
     def move(self):
         velocity = SPEED * self.app.delta_time
         keys = pg.key.get_pressed()
+
+        move_dir = glm.vec3(0)  
+
+       
+        forward_dir = glm.vec3(self.forward.x, 0, self.forward.z)  
         if keys[pg.K_w]:
-            self.position += self.forward * velocity
+            move_dir += forward_dir
         if keys[pg.K_s]:
-            self.position -= self.forward * velocity
+            move_dir -= forward_dir
+
+       
         if keys[pg.K_a]:
-            self.position -= self.right * velocity
+            move_dir -= self.right
         if keys[pg.K_d]:
-            self.position += self.right * velocity
-        if keys[pg.K_q]:
-            self.position += self.up * velocity
-        if keys[pg.K_e]:
-            self.position -= self.up * velocity
+            move_dir += self.right
+
+        
+        if keys[pg.K_q]:  
+            move_dir -= self.up
+        if keys[pg.K_e]: 
+            move_dir += self.up
+
+        
+        if keys[pg.K_SPACE] and not self.is_jumping:  
+            self.is_jumping = True 
+            self.jump_start_y = self.position.y  
+            self.jump_start_time = time.time()  
+
+        if self.is_jumping:
+           
+            jump_duration = 0.7  
+            jump_progress = (time.time() - self.jump_start_time) / jump_duration
+
+            if jump_progress <= 1.0:
+                
+                jump_height = 2.0  
+                self.position.y = self.jump_start_y + jump_height * math.sin(jump_progress * math.pi)
+
+                
+                self.position += move_dir * velocity
+
+            else:
+                
+                self.is_jumping = False
+                self.jump_start_time = None
+
+        else:
+            self.position += move_dir * velocity
+
+            gravity = 9.8 
+            ground_level = 0.0  
+
+            if self.position.y > ground_level:
+                self.position.y -= gravity * velocity
+
+                if self.position.y < ground_level:
+                    self.position.y = ground_level
+
+       
+        new_aabb = AABB(self.position - self.size / 2, self.position + self.size / 2)
+        if not self.check_collisions(new_aabb):
+            self.aabb = new_aabb
+
+    def check_collisions(self, aabb):
+        for obj in self.app.scene.objects:
+            if aabb.is_colliding(obj.aabb):
+                return True
+        return False
 
     def get_view_matrix(self):
         return glm.lookAt(self.position, self.position + self.forward, self.up)
 
     def get_projection_matrix(self):
         return glm.perspective(glm.radians(FOV), self.aspect_ratio, NEAR, FAR)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

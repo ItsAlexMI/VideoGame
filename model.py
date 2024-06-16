@@ -1,38 +1,47 @@
 import moderngl as mgl
 import numpy as np
 import glm
-
+from aabb import AABB
 
 class BaseModel:
     def __init__(self, app, vao_name, tex_id, pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
         self.app = app
-        self.pos = pos
+        self.pos = glm.vec3(pos)  # Convert to glm.vec3
         self.vao_name = vao_name
         self.rot = glm.vec3([glm.radians(a) for a in rot])
-        self.scale = scale
+        self.scale = glm.vec3(scale)  # Convert to glm.vec3
         self.m_model = self.get_model_matrix()
         self.tex_id = tex_id
         self.vao = app.mesh.vao.vaos[vao_name]
         self.program = self.vao.program
         self.camera = self.app.camera
+        self.aabb = self.create_aabb()
 
-    def update(self): ...
+    def update(self):
+        self.m_model = self.get_model_matrix()
+        self.update_aabb()
 
     def get_model_matrix(self):
-        m_model = glm.mat4()
-        # translate
+        m_model = glm.mat4(1.0)  # Identity matrix
         m_model = glm.translate(m_model, self.pos)
-        # rotate
         m_model = glm.rotate(m_model, self.rot.z, glm.vec3(0, 0, 1))
         m_model = glm.rotate(m_model, self.rot.y, glm.vec3(0, 1, 0))
         m_model = glm.rotate(m_model, self.rot.x, glm.vec3(1, 0, 0))
-        # scale
         m_model = glm.scale(m_model, self.scale)
         return m_model
 
     def render(self):
         self.update()
         self.vao.render()
+
+    def create_aabb(self):
+        min_corner = self.pos - self.scale / 2
+        max_corner = self.pos + self.scale / 2
+        return AABB(min_corner, max_corner)
+
+    def update_aabb(self):
+        self.aabb.min_corner = self.pos - self.scale / 2
+        self.aabb.max_corner = self.pos + self.scale / 2
 
 
 class ExtendedBaseModel(BaseModel):
@@ -86,21 +95,6 @@ class Cube(ExtendedBaseModel):
     def __init__(self, app, vao_name='cube', tex_id=0, pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
         super().__init__(app, vao_name, tex_id, pos, rot, scale)
 
-
-
-# class MovingCube(Cube):
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-
-#     def update(self):
-#         self.m_model = self.get_model_matrix()
-#         super().update()
-
-
-# class Cat(ExtendedBaseModel):
-#     def __init__(self, app, vao_name='cat', tex_id='cat',
-#                  pos=(0, 0, 0), rot=(-90, 0, 0), scale=(1, 1, 1)):
-#         super().__init__(app, vao_name, tex_id, pos, rot, scale)
 
 
 class SkyBox(BaseModel):
