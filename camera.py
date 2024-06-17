@@ -4,7 +4,7 @@ import math
 import time
 from aabb import AABB
 
-FOV = 50  # deg
+FOV = 50  
 NEAR = 0.1
 FAR = 100
 SPEED = 0.005
@@ -72,12 +72,6 @@ class Camera:
             move_dir -= self.right
         if keys[pg.K_d]:
             move_dir += self.right
-
-        
-        if keys[pg.K_q]:  
-            move_dir -= self.up
-        if keys[pg.K_e]: 
-            move_dir += self.up
 
         
         if keys[pg.K_SPACE] and not self.is_jumping:  

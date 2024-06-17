@@ -9,20 +9,31 @@ from scene import Scene
 from scene_renderer import SceneRenderer
 
 class GraphicsEngine:
-    def __init__(self, win_size=(1080, 720)):
+    def __init__(self, win_size=(1080, 1024), fullscreen=True):
         pg.init()
         self.WIN_SIZE = win_size
+        self.fullscreen = fullscreen
+        
         pg.display.gl_set_attribute(pg.GL_CONTEXT_MAJOR_VERSION, 3)
         pg.display.gl_set_attribute(pg.GL_CONTEXT_MINOR_VERSION, 3)
         pg.display.gl_set_attribute(pg.GL_CONTEXT_PROFILE_MASK, pg.GL_CONTEXT_PROFILE_CORE)
-        pg.display.set_mode(self.WIN_SIZE, flags=pg.OPENGL | pg.DOUBLEBUF)
+        
+        if self.fullscreen:
+            flags = pg.OPENGL | pg.DOUBLEBUF | pg.FULLSCREEN
+        else:
+            flags = pg.OPENGL | pg.DOUBLEBUF
+        
+        self.screen = pg.display.set_mode(self.WIN_SIZE, flags)
         pg.event.set_grab(True)
         pg.mouse.set_visible(False)
+        
         self.ctx = mgl.create_context()
         self.ctx.enable(flags=mgl.DEPTH_TEST | mgl.CULL_FACE)
+        
         self.clock = pg.time.Clock()
         self.time = 0
         self.delta_time = 0
+        
         self.light = Light()
         self.camera = Camera(self)
         self.mesh = Mesh(self)
