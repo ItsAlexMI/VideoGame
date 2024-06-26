@@ -1,7 +1,6 @@
 from vbo import VBO
 from shader_program import ShaderProgram
 
-
 class VAO:
     def __init__(self, ctx):
         self.ctx = ctx
@@ -9,23 +8,36 @@ class VAO:
         self.program = ShaderProgram(ctx)
         self.vaos = {}
 
-        # cube vao
+        # Configuración de los VAOs
+        self.setup_vaos()
+
+    def setup_vaos(self):
+        # VAO para el cubo
         self.vaos['cube'] = self.get_vao(
             program=self.program.programs['default'],
-            vbo = self.vbo.vbos['cube'])
+            vbo=self.vbo.vbos['cube'])
 
-        # shadow cube vao
+        # VAO para el árbol
+        self.vaos['tree'] = self.get_vao(
+            program=self.program.programs['default'],
+            vbo=self.vbo.vbos['tree'])
+
+        # VAO para la sombra del cubo
         self.vaos['shadow_cube'] = self.get_vao(
             program=self.program.programs['shadow_map'],
-            vbo = self.vbo.vbos['cube'])
+            vbo=self.vbo.vbos['cube'])
 
+        # VAO para la sombra del árbol
+        self.vaos['shadow_tree'] = self.get_vao(
+            program=self.program.programs['shadow_map'],
+            vbo=self.vbo.vbos['tree'])
 
-        # skybox vao
+        # VAO para el skybox
         self.vaos['skybox'] = self.get_vao(
             program=self.program.programs['skybox'],
             vbo=self.vbo.vbos['skybox'])
 
-        # advanced_skybox vao
+        # VAO para el skybox avanzado
         self.vaos['advanced_skybox'] = self.get_vao(
             program=self.program.programs['advanced_skybox'],
             vbo=self.vbo.vbos['advanced_skybox'])

@@ -11,6 +11,7 @@ class Texture:
         self.textures[0] = self.get_texture(path='textures/img.png')
         self.textures['skybox'] = self.get_texture_cube(dir_path='textures/skybox1/', ext='png')
         self.textures['depth_texture'] = self.get_depth_texture()
+        self.textures['tree'] = self.get_texture(path='objects/tree/BarkDecidious0107_M.jpg')
 
     def get_depth_texture(self):
         depth_texture = self.ctx.depth_texture(self.app.WIN_SIZE)
