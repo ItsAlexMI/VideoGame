@@ -1,4 +1,5 @@
 import pygame as pg
+from pygame import mixer
 import moderngl as mgl
 import sys
 from model import *
@@ -11,6 +12,10 @@ from scene_renderer import SceneRenderer
 class GraphicsEngine:
     def __init__(self, win_size=(1080, 1024), fullscreen=True):
         pg.init()
+        mixer.init()
+        mixer.music.load('resources/sounds/fondo_music.wav')
+        mixer.music.set_volume(0.2)
+        
         self.WIN_SIZE = win_size
         self.fullscreen = fullscreen
         
@@ -45,6 +50,7 @@ class GraphicsEngine:
             if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
                 self.mesh.destroy()
                 self.scene_renderer.destroy()
+                mixer.music.stop()  # Detener la música al salir
                 pg.quit()
                 sys.exit()
 
@@ -57,6 +63,7 @@ class GraphicsEngine:
         self.time = pg.time.get_ticks() * 0.001
 
     def run(self):
+        mixer.music.play(loops=-1)  # Reproducir la música en bucle
         while True:
             self.get_time()
             self.check_events()
