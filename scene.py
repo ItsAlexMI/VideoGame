@@ -1,6 +1,6 @@
 from model import *
 import glm
-
+import random
 
 class Scene:
     def __init__(self, app):
@@ -18,7 +18,12 @@ class Scene:
             for z in range(-n, n, s):
                 self.add_object(Cube(self.app, pos=(x, -s, z)))
 
-        self.add_object(Tree(self.app, pos=(0, -1, 0)))
+
+        #add tree in random places
+        for i in range(0, 10):
+            x = random.randint(-n, n)
+            z = random.randint(-n, n)
+            self.add_object(Tree(self.app, pos=(x, -3, z)))
 
     def render(self):
         for obj in self.objects:
