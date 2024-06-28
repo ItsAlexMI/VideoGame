@@ -111,7 +111,6 @@ class AdvancedSkyBoxVBO(BaseVBO):
         self.attribs = ['in_position']
 
     def get_vertex_data(self):
-        # in clip space
         z = 0.9999
         vertices = [(-1, -1, z), (3, -1, z), (-1, 3, z)]
         vertex_data = np.array(vertices, dtype='f4')
@@ -125,7 +124,7 @@ class TreeVBO(BaseVBO):
         self.attribs = ['in_texcoord_0', 'in_normal', 'in_position']
 
     def get_vertex_data(self):
-        objs = pywavefront.Wavefront('objects/tree/Tree.obj', cache=True, parse=True)
+        objs = pywavefront.Wavefront('objects/pine/tower3.obj', cache=True, parse=True)
         obj = objs.materials.popitem()[1]
         vertex_data = obj.vertices
         vertex_data = np.array(vertex_data, dtype='f4')

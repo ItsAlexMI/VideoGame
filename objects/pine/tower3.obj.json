@@ -1,0 +1,15 @@
+{
+  "created_at": "2024-06-28T02:08:30.283596",
+  "version": "0.1",
+  "mtllibs": [
+    "tower3.mtl"
+  ],
+  "vertex_buffers": [
+    {
+      "material": "nature_bark_pear_01_l_0001",
+      "vertex_format": "T2F_N3F_V3F",
+      "byte_offset": 0,
+      "byte_length": 1889664
+    }
+  ]
+}
