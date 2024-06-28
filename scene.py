@@ -13,13 +13,12 @@ class Scene:
         self.objects.append(obj)
 
     def load(self):
-        n, s = 10, 2
+        n, s = 50, 2
         for x in range(-n, n, s):
             for z in range(-n, n, s):
                 self.add_object(Cube(self.app, pos=(x, -s, z)))
 
-        # Añadir el objeto tree dentro del método load
-        self.add_object(tree(self.app, pos=(0, 10, 10)))
+        self.add_object(Tree(self.app, pos=(0, -1, 0)))
 
     def render(self):
         for obj in self.objects:
