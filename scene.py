@@ -14,6 +14,7 @@ class Scene:
 
     def load(self):
         n, s = 50, 2
+        n, s = 50, 2
         for x in range(-n, n, s):
             for z in range(-n, n, s):
                 self.add_object(Cube(self.app, pos=(x, -s, z)))
