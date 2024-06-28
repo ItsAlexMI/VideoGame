@@ -1,10 +1,9 @@
-# flashligh.py
 import glm
 
 class Flashlight:
     def __init__(self, app):
         self.app = app
-        self.position = glm.vec3(0, 0, 0)  # Inicialmente debajo de la cámara
+        self.position = glm.vec3(0, 0, 0)  # Puedes ajustar la posición inicial
         self.color = glm.vec3(1, 1, 1)  # Color blanco por defecto
         self.angle = glm.radians(35)  # Ángulo de luz de 35 grados
         self.Ia = 5.0 * self.color  # Intensidad ambiental (igual a la luz ambiental existente)
@@ -16,7 +15,7 @@ class Flashlight:
         return glm.lookAt(self.position, self.position + self.app.camera.forward, glm.vec3(0, 1, 0))
 
     def update(self):
-        self.position = self.app.camera.position - glm.vec3(0, 0.5, 0)  # Actualiza la posición debajo de la cámara
+        self.position = self.app.camera.position + self.app.camera.forward * 2.0  # Actualiza la posición delante de la cámara
         self.m_view_light = self.get_view_matrix()
 
     def get_direction(self):

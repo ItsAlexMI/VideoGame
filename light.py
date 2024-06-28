@@ -2,14 +2,14 @@ import glm
 
 
 class Light:
-    def __init__(self, position=(0, 50, -50), color=(1, 1, 1)):
+    def __init__(self, position=(0, 50, 50), color=(1, 1, 1)):
         self.position = glm.vec3(position)
         self.color = glm.vec3(color)
         self.direction = glm.vec3(0, 0, 0)
         # intensities
-        self.Ia = 0.5 * self.color  # ambient
-        self.Id = 0.6 * self.color  # diffuse
-        self.Is = 0.5 * self.color  # specular
+        self.Ia = 0.02 * self.color  # ambient
+        self.Id = 0.02 * self.color  # diffuse
+        self.Is = 0.01 * self.color  # specular
         # view matrix
         self.m_view_light = self.get_view_matrix()
 

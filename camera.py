@@ -127,3 +127,5 @@ class Camera:
 
     def get_projection_matrix(self):
         return glm.perspective(glm.radians(FOV), self.aspect_ratio, NEAR, FAR)
+    def get_flashlight_position(self):
+        return self.position + self.forward * glm.vec3(0, 0, -1)  
