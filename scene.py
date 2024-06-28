@@ -1,5 +1,6 @@
 from model import *
 import glm
+from flashlight import Flashlight
 
 
 class Scene:
