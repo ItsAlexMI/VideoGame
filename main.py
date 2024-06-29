@@ -5,7 +5,6 @@ import sys
 from model import *
 from camera import Camera
 from light import Light
-from flashlight import Flashlight
 from mesh import Mesh
 from scene import Scene
 from scene_renderer import SceneRenderer
@@ -43,7 +42,6 @@ class GraphicsEngine:
 
         self.light = Light()
         self.camera = Camera(self)
-        self.flashlight = Flashlight(self)  
         self.mesh = Mesh(self)
         self.scene = Scene(self)
         self.scene_renderer = SceneRenderer(self)
@@ -64,9 +62,7 @@ class GraphicsEngine:
         self.scene_renderer.render()
 
         shader_program = self.shader_program.programs['default']
-        shader_program['flashlight.position'].value = tuple(self.flashlight.position)
-        shader_program['flashlight.direction'].value = tuple(self.flashlight.get_direction())
-        shader_program['flashlight.color'].value = tuple(self.flashlight.color)
+
 
         pg.display.flip()
 
@@ -79,7 +75,6 @@ class GraphicsEngine:
             self.get_time()
             self.check_events()
             self.camera.update()
-            self.flashlight.update()  
             self.scene.update()
             self.render()
             self.delta_time = self.clock.tick(60)

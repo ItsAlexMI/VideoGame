@@ -128,7 +128,7 @@ def menu(output_folder):
 
         pygame.display.flip()
 
-        clock.tick(60) 
+        clock.tick(120) 
 
 if __name__ == "__main__":
     output_folder = 'frames'
