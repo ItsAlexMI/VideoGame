@@ -39,17 +39,18 @@ class Scene:
                     break
 
         tree_count = 0
-        while tree_count < 2:
+        while tree_count < 4:
             x = random.uniform(-n, n)
             z = random.uniform(-n, n)
 
             for cx, cz in cube_positions:
                 if abs(x - cx) < s / 2 and abs(z - cz) < s / 2:
                     self.add_object(Tree(self.app, pos=(x, -2, z)))
+                    self.add_object(Arbol(self.app, pos=(x, -1.2, z)))
                     tree_count += 1
                     break
 
-
+        
     def render(self):
         for obj in self.objects:
             obj.render()

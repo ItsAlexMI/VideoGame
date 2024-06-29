@@ -104,8 +104,13 @@ class Grass(ExtendedBaseModel):
         super().__init__(app, vao_name, tex_id, pos, rot, scale)
 
 class Rock(ExtendedBaseModel):
-    def __init__(self, app, vao_name='rock', tex_id='rock', pos=(0, 0, 0), rot=(0, 0, 0), scale=(0.1, 0.1, 0.1)):
+    def __init__(self, app, vao_name='rock', tex_id='rock', pos=(0, 0, 0), rot=(0, 0, 0), scale=(0.05, 0.05, 0.05)):
         super().__init__(app, vao_name, tex_id, pos, rot, scale)
+
+class Arbol(ExtendedBaseModel):
+    def __init__(self, app, vao_name='arbol', tex_id='arbol', pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
+        super().__init__(app, vao_name, tex_id, pos, rot, scale)
+
 class SkyBox(BaseModel):
     def __init__(self, app, vao_name='skybox', tex_id='skybox',
                  pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):

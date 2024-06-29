@@ -23,6 +23,11 @@ class VAO:
             program=self.program.programs['default'],
             vbo=self.vbo.vbos['grass'])    
 
+        self.vaos['arbol'] = self.get_vao(
+            program=self.program.programs['default'],
+            vbo=self.vbo.vbos['arbol'])    
+
+
         self.vaos['rock'] = self.get_vao(
             program=self.program.programs['default'],
             vbo=self.vbo.vbos['rock'])
@@ -31,6 +36,10 @@ class VAO:
             program=self.program.programs['shadow_map'],
             vbo=self.vbo.vbos['cube'])
         
+        self.vaos['shadow_arbol'] = self.get_vao(
+            program=self.program.programs['shadow_map'],
+            vbo=self.vbo.vbos['arbol'])
+
         self.vaos['shadow_grass'] = self.get_vao(
             program=self.program.programs['shadow_map'],
             vbo=self.vbo.vbos['grass'])  
