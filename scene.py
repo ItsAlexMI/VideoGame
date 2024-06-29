@@ -13,7 +13,7 @@ class Scene:
         self.objects.append(obj)
 
     def load(self):
-        n, s = 50, 2
+        n, s = 50, 2    
         grass_density = 4
         rock_count = 3  
         cube_positions = []
@@ -45,7 +45,7 @@ class Scene:
 
             for cx, cz in cube_positions:
                 if abs(x - cx) < s / 2 and abs(z - cz) < s / 2:
-                    self.add_object(Tree(self.app, pos=(x, -3, z)))
+                    self.add_object(Tree(self.app, pos=(x, -2, z)))
                     tree_count += 1
                     break
 
