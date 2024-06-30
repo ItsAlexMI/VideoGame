@@ -1,0 +1,15 @@
+{
+  "created_at": "2024-06-29T23:53:10.775068",
+  "version": "0.1",
+  "mtllibs": [
+    "slender.mtl"
+  ],
+  "vertex_buffers": [
+    {
+      "material": "Tex_0666_0_dds",
+      "vertex_format": "T2F_N3F_V3F",
+      "byte_offset": 0,
+      "byte_length": 507744
+    }
+  ]
+}

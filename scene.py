@@ -50,6 +50,16 @@ class Scene:
                     tree_count += 1
                     break
 
+        slender_count = 0
+        while slender_count < 1:
+            x = random.uniform(-n, n)
+            z = random.uniform(-n, n)
+
+            for cx, cz in cube_positions:
+                if abs(x - cx) < s / 2 and abs(z - cz) < s / 2:
+                    self.add_object(Slenderman(self.app, pos=(x, -0.3, z)))
+                    slender_count += 1
+                    break
         
     def render(self):
         for obj in self.objects:

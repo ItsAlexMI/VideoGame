@@ -111,6 +111,10 @@ class Arbol(ExtendedBaseModel):
     def __init__(self, app, vao_name='arbol', tex_id='arbol', pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
         super().__init__(app, vao_name, tex_id, pos, rot, scale)
 
+class Slenderman(ExtendedBaseModel):
+    def __init__(self, app, vao_name='slender', tex_id='slender', pos=(0, 0, 0), rot=(0, 0, 0), scale=(0.002, 0.002, 0.002)):
+        super().__init__(app, vao_name, tex_id, pos, rot, scale)
+
 class SkyBox(BaseModel):
     def __init__(self, app, vao_name='skybox', tex_id='skybox',
                  pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):

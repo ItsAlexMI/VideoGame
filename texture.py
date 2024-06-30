@@ -15,6 +15,7 @@ class Texture:
         self.textures['grass'] = self.get_texture(path='objects\grass\Grass.png')
         self.textures['rock'] = self.get_texture(path='objects/rock/8b1ab5bc781b40a48fae2331aba07932.jpeg')
         self.textures['arbol'] = self.get_texture(path='objects/arbol/texture_laubbaum.png')
+        self.textures['slender'] = self.get_texture(path='objects\slenderman\Tex_0666_0.PNG')
         print(self.textures['tree'])
     def get_depth_texture(self):
         depth_texture = self.ctx.depth_texture(self.app.WIN_SIZE)
