@@ -1,14 +1,12 @@
-import numpy as np
+import glm
 
 class AABB:
-    def __init__(self, min_corner, max_corner):
-        self.min_corner = np.array(min_corner)
-        self.max_corner = np.array(max_corner)
+    def __init__(self, min_point, max_point):
+        self.min_point = glm.vec3(min_point)
+        self.max_point = glm.vec3(max_point)
 
     def is_colliding(self, other):
-        return (self.min_corner[0] <= other.max_corner[0] and
-                self.max_corner[0] >= other.min_corner[0] and
-                self.min_corner[1] <= other.max_corner[1] and
-                self.max_corner[1] >= other.min_corner[1] and
-                self.min_corner[2] <= other.max_corner[2] and
-                self.max_corner[2] >= other.min_corner[2])
+        return (self.min_point.x <= other.max_point.x and self.max_point.x >= other.min_point.x) and \
+               (self.min_point.y <= other.max_point.y and self.max_point.y >= other.min_point.y) and \
+               (self.min_point.z <= other.max_point.z and self.max_point.z >= other.min_point.z)
+

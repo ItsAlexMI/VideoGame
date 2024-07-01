@@ -3,19 +3,22 @@ import numpy as np
 import glm
 from aabb import AABB
 
+
+
 class BaseModel:
     def __init__(self, app, vao_name, tex_id, pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
         self.app = app
-        self.pos = glm.vec3(pos)  # Convert to glm.vec3
+        self.pos = glm.vec3(pos) 
         self.vao_name = vao_name
         self.rot = glm.vec3([glm.radians(a) for a in rot])
-        self.scale = glm.vec3(scale)  # Convert to glm.vec3
+        self.scale = glm.vec3(scale)  
         self.m_model = self.get_model_matrix()
         self.tex_id = tex_id
         self.vao = app.mesh.vao.vaos[vao_name]
         self.program = self.vao.program
         self.camera = self.app.camera
         self.aabb = self.create_aabb()
+        
 
     def update(self):
         self.m_model = self.get_model_matrix()
@@ -96,9 +99,11 @@ class Cube(ExtendedBaseModel):
         super().__init__(app, vao_name, tex_id, pos, rot, scale)
         
 class Tree(ExtendedBaseModel):
-    def __init__(self, app, vao_name='tree', tex_id='tree', pos=(0, 0, 0), rot=(360, 0, 0), scale=(1, 1, 1)):
+    def __init__(self, app, vao_name='tree', tex_id='tree', pos=(0, 0, 0), rot=(0, 0, 0), scale=(0.002, 0.002, 0.002)):
         super().__init__(app, vao_name, tex_id, pos, rot, scale)
 
+    def update(self):
+        super().update()  
 class Grass(ExtendedBaseModel):
     def __init__(self, app, vao_name='grass', tex_id='grass', pos=(0, 0, 0), rot=(0, 0, 0), scale=(0.1, 0.1, 0.1)):
         super().__init__(app, vao_name, tex_id, pos, rot, scale)
@@ -114,6 +119,10 @@ class Arbol(ExtendedBaseModel):
 class Slenderman(ExtendedBaseModel):
     def __init__(self, app, vao_name='slender', tex_id='slender', pos=(0, 0, 0), rot=(0, 0, 0), scale=(0.002, 0.002, 0.002)):
         super().__init__(app, vao_name, tex_id, pos, rot, scale)
+
+    def update(self):
+        super().update()  # Actualiza la matriz de modelo y el AABB
+
 
 class SkyBox(BaseModel):
     def __init__(self, app, vao_name='skybox', tex_id='skybox',
@@ -149,21 +158,3 @@ class AdvancedSkyBox(BaseModel):
         self.texture = self.app.mesh.texture.textures[self.tex_id]
         self.program['u_texture_skybox'] = 0
         self.texture.use(location=0)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
