@@ -1,16 +1,24 @@
 from model import *
 import glm
 import random
+import time
 
 class Scene:
     def __init__(self, app):
         self.app = app
         self.objects = []
+        self.slenderman = None
+        self.slenderman_timer = time.time()
+        self.slenderman_interval = 5  
         self.load()
         self.skybox = AdvancedSkyBox(app)
 
     def add_object(self, obj):
         self.objects.append(obj)
+
+    def remove_object(self, obj):
+        if obj in self.objects:
+            self.objects.remove(obj)
 
     def load(self):
         n, s = 50, 2    
@@ -50,22 +58,32 @@ class Scene:
                     tree_count += 1
                     break
 
-        slender_count = 0
-        while slender_count < 1:
-            x = random.uniform(-n, n)
-            z = random.uniform(-n, n)
+        self.spawn_slenderman(n, s, cube_positions)
 
-            for cx, cz in cube_positions:
-                if abs(x - cx) < s / 2 and abs(z - cz) < s / 2:
-                    self.add_object(Slenderman(self.app, pos=(x, -0.3, z)))
-                    slender_count += 1
-                    break
-        
+    def spawn_slenderman(self, n, s, cube_positions):
+        x = random.uniform(-n, n)
+        z = random.uniform(-n, n)
+
+        for cx, cz in cube_positions:
+            if abs(x - cx) < s / 2 and abs(z - cz) < s / 2:
+                if self.slenderman:
+                    self.remove_object(self.slenderman)
+                self.slenderman = Slenderman(self.app, pos=(x, -0.3, z))
+                self.add_object(self.slenderman)
+                break
+
+    def move_slenderman(self):
+        if time.time() - self.slenderman_timer > self.slenderman_interval:
+            n, s = 50, 2
+            self.spawn_slenderman(n, s, [(cx, cz) for obj in self.objects if isinstance(obj, Cube) for cx, cz in [(obj.pos[0], obj.pos[2])]])
+            self.slenderman_timer = time.time()
+
     def render(self):
         for obj in self.objects:
             obj.render()
         self.skybox.render()
 
     def update(self):
+        self.move_slenderman()
         for obj in self.objects:
             obj.update()
