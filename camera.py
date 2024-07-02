@@ -4,6 +4,7 @@ import math
 import time
 from aabb import AABB
 from model import *
+from screamer import *
 
 FOV = 50  
 NEAR = 0.1
@@ -37,6 +38,7 @@ class Camera:
         self.jump_sound.set_volume(0.5)  
         self.is_moving = False
 
+        self.screamer_played = False
     def rotate(self):
         rel_x, rel_y = pg.mouse.get_rel()
         self.yaw += rel_x * SENSITIVITY
@@ -127,6 +129,13 @@ class Camera:
         for obj in self.app.scene.objects:
             if isinstance(obj, (Tree, Slenderman)):
                 if aabb.is_colliding(obj.aabb):
+                    print("Colision " + obj.__class__.__name__)
+                    if isinstance(obj, Slenderman):
+                        self.screamer_played = True
+                        time.sleep(2)
+                        pg.quit()
+                        subprocess.run([sys.executable, "screamer.py"])
+                        sys.exit()
                     return True
         return False
 

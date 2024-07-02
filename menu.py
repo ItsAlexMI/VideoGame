@@ -4,7 +4,7 @@ import subprocess
 import os
 import random
 import time
-
+from pygame import mixer
 def load_frames(folder):
     frames = []
     for filename in sorted(os.listdir(folder)):
@@ -25,6 +25,8 @@ def menu(output_folder):
 
     screen_width, screen_height = screen.get_size()
 
+    
+
     click_sound = pygame.mixer.Sound('resources/sounds/click.wav')
     hover_sound = pygame.mixer.Sound('resources/sounds/hover.wav')
 
@@ -33,6 +35,10 @@ def menu(output_folder):
 
     hover_channel = pygame.mixer.Channel(0)
     click_channel = pygame.mixer.Channel(1)
+    
+    mixer.music.load('resources/sounds/candyman.wav')
+    mixer.music.set_volume(1)
+    mixer.music.play(-1)
 
     clock = pygame.time.Clock()
 
@@ -111,7 +117,8 @@ def menu(output_folder):
         if play_mouse_over and mouse_click:
             click_channel.play(click_sound)
             try:
-                subprocess.run([sys.executable, "main.py"], check=True)
+                subprocess.Popen([sys.executable, "main.py"])
+                time.sleep(4)
                 pygame.quit()
                 sys.exit()
             except subprocess.CalledProcessError as e:
