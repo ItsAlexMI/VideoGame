@@ -10,6 +10,8 @@ from scene import Scene
 from scene_renderer import SceneRenderer
 from shader_program import ShaderProgram
 import subprocess
+from videos import play_screamer
+import time
 
 
 class GraphicsEngine:
@@ -79,8 +81,9 @@ class GraphicsEngine:
             if self.time > 30 and not self.screamer_played:
                 self.screamer_played = True
                 pg.quit()
-                subprocess.run([sys.executable, "screamer.py"])
+                play_screamer()
                 sys.exit()
+
 
             self.render()
             self.delta_time = self.clock.tick(60)

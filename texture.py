@@ -16,7 +16,11 @@ class Texture:
         self.textures['rock'] = self.get_texture(path='objects/rock/8b1ab5bc781b40a48fae2331aba07932.jpeg')
         self.textures['arbol'] = self.get_texture(path='objects/arbol/texture_laubbaum.png')
         self.textures['slender'] = self.get_texture(path='objects\slenderman\Tex_0666_0.PNG')
+        self.textures['car'] = self.get_texture(path='objects/car/1588147794306-removebg-preview.png')
+        self.textures['house'] = self.get_texture(path='objects\house\house_04_diff.png')
+
         print(self.textures['tree'])
+
     def get_depth_texture(self):
         depth_texture = self.ctx.depth_texture(self.app.WIN_SIZE)
         depth_texture.repeat_x = False

@@ -27,7 +27,6 @@ class VAO:
             program=self.program.programs['default'],
             vbo=self.vbo.vbos['arbol'])    
 
-
         self.vaos['rock'] = self.get_vao(
             program=self.program.programs['default'],
             vbo=self.vbo.vbos['rock'])
@@ -35,6 +34,14 @@ class VAO:
         self.vaos['slender'] = self.get_vao(
             program=self.program.programs['default'],
             vbo=self.vbo.vbos['slender'])
+
+        self.vaos['car'] = self.get_vao(
+            program=self.program.programs['default'],
+            vbo=self.vbo.vbos['car'])
+
+        self.vaos['house'] = self.get_vao(
+            program=self.program.programs['default'],
+            vbo=self.vbo.vbos['house'])
 
         self.vaos['shadow_cube'] = self.get_vao(
             program=self.program.programs['shadow_map'],
@@ -60,6 +67,15 @@ class VAO:
         self.vaos['shadow_slender'] = self.get_vao(
         program=self.program.programs['shadow_map'],
         vbo=self.vbo.vbos['slender'])
+
+        self.vaos['shadow_car'] = self.get_vao(
+        program=self.program.programs['shadow_map'],
+        vbo=self.vbo.vbos['car'])
+
+
+        self.vaos['shadow_house'] = self.get_vao(
+            program=self.program.programs['shadow_map'],
+            vbo=self.vbo.vbos['house'])
 
         self.vaos['skybox'] = self.get_vao(
             program=self.program.programs['skybox'],
