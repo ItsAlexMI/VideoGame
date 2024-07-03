@@ -6,6 +6,9 @@ from model import *
 
 class Scene:
     def __init__(self, app):
+        """
+        Initializes a new instance of the Scene class.
+        """
         self.app = app
         self.objects = []
         self.skybox = AdvancedSkyBox(app)
@@ -16,13 +19,27 @@ class Scene:
         self.load()
 
     def add_object(self, obj):
+        """
+        Adds an object to the list of objects in the scene.
+        """
         self.objects.append(obj)
 
     def remove_object(self, obj):
+        """
+        Removes an object from the list of objects in the scene.
+        """
         if obj in self.objects:
             self.objects.remove(obj)
 
     def load(self):
+        """
+        Initializes the scene by creating a grid of cubes, grass, rocks, and trees.
+        
+        This function creates a grid of cubes with a size of `n` by `n` with a spacing of `s`. 
+        It then randomly generates grass objects within the grid with a density of `grass_density`.
+        It also randomly generates rock objects within the grid, ensuring that they do not overlap with the cubes.
+        Finally, it randomly generates tree objects within the grid, ensuring that they do not overlap with the cubes.
+        """
         n, s = 50, 2    
         grass_density = 4
         rock_count = 3  
@@ -62,6 +79,9 @@ class Scene:
         self.spawn_slenderman(cube_positions)
     
     def spawn_trees(self, cube_positions):
+        """
+        Spawns trees in the scene without overlapping with other objects.
+        """
         tree_count = 0
         n, s = 50, 2
         while tree_count < 4:
@@ -80,6 +100,12 @@ class Scene:
                 obj.update_aabb()
     
     def spawn_slenderman(self, cube_positions):
+        """
+        Spawns a Slenderman in the scene without overlapping with other objects.
+
+        Parameters:
+            cube_positions (List[Tuple[float, float]]): A list of tuples representing the positions of the cubes in the scene.
+        """
         n, s = 50, 2
         
         if self.first_slenderman_spawned and self.slenderman:
@@ -101,6 +127,16 @@ class Scene:
         self.slenderman_timer = time.time()
 
     def move_slenderman(self):
+        """
+        Moves the Slenderman in the scene at a random position without overlapping with other objects.
+
+        This function checks if enough time has passed since the last movement of the Slenderman. If it has,
+        it generates a new random position for the Slenderman within a range of -n to n in the x and z
+        coordinates. It then creates a new Axis-Aligned Bounding Box (AABB) for the new position and checks
+        if it collides with any other objects in the scene. If it does not collide, the Slenderman is
+        removed from the scene and a new Slenderman is created at the new position. The timer for the
+        Slenderman's movement is updated.
+        """
         if time.time() - self.slenderman_timer > self.slenderman_interval:
             n, s = 50, 2
             cube_positions = [(cx, cz) for obj in self.objects if isinstance(obj, Cube) for cx, cz in [(obj.pos[0], obj.pos[2])]]
@@ -123,11 +159,20 @@ class Scene:
             self.slenderman_timer = time.time()
 
     def render(self):
+        """
+        Renders all objects in the scene and the skybox.
+        This function iterates over each object in the `self.objects` list and calls its `render` method. This allows each object to render itself on the screen. After rendering all the objects, the `render` method of the `self.skybox` object is called to render the skybox.
+        """
         for obj in self.objects:
             obj.render()
         self.skybox.render()
 
     def update(self):
+        """
+        Updates each object in the scene, checking if they have an `update` method and calling it if present.
+        If the object is an instance of `Tree` or `Slenderman`, updates their Axis-Aligned Bounding Box (AABB).
+        Finally, moves the Slenderman in the scene to a new random position.
+        """
         for obj in self.objects:
             if hasattr(obj, 'update'):
                 obj.update()  
