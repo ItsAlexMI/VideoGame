@@ -19,6 +19,10 @@ class VBO:
 
         self.vbos['slender'] = SlenderVBO(ctx)
 
+        self.vbos['car'] = CarVBO(ctx)
+
+        self.vbos['house'] = HouseVBO(ctx)
+
     def destroy(self):
         [vbo.destroy() for vbo in self.vbos.values()]
 
@@ -133,6 +137,30 @@ class GrassVBO(BaseVBO):
         self.attribs = ['in_texcoord_0', 'in_normal', 'in_position']
     def get_vertex_data(self):
         objs = pywavefront.Wavefront('objects\grass\grass.obj', cache=True, parse=True)
+        obj = objs.materials.popitem()[1]
+        vertex_data = obj.vertices
+        vertex_data = np.array(vertex_data, dtype='f4')
+        return vertex_data
+
+class CarVBO(BaseVBO):
+    def __init__(self, ctx):
+        super().__init__(ctx)
+        self.format = '2f 3f 3f'
+        self.attribs = ['in_texcoord_0', 'in_normal', 'in_position']
+    def get_vertex_data(self):
+        objs = pywavefront.Wavefront('objects/car/car.obj', cache=True, parse=True)
+        obj = objs.materials.popitem()[1]
+        vertex_data = obj.vertices
+        vertex_data = np.array(vertex_data, dtype='f4')
+        return vertex_data
+
+class HouseVBO(BaseVBO):
+    def __init__(self, ctx):
+        super().__init__(ctx)
+        self.format = '2f 3f 3f'
+        self.attribs = ['in_texcoord_0', 'in_normal', 'in_position']
+    def get_vertex_data(self):
+        objs = pywavefront.Wavefront('objects/house/house.obj', cache=True, parse=True)
         obj = objs.materials.popitem()[1]
         vertex_data = obj.vertices
         vertex_data = np.array(vertex_data, dtype='f4')

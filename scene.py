@@ -32,6 +32,10 @@ class Scene:
             self.objects.remove(obj)
 
     def load(self):
+<<<<<<< HEAD
+        n, s = 100, 2    
+        grass_density = 0
+=======
         """
         Initializes the scene by creating a grid of cubes, grass, rocks, and trees.
         
@@ -42,8 +46,10 @@ class Scene:
         """
         n, s = 50, 2    
         grass_density = 4
+>>>>>>> e0863b995236dd9682fd64fe94e7e21e2527f43e
         rock_count = 3  
         cube_positions = []
+
         for x in range(-n, n, s):
             for z in range(-n, n, s):
                 self.add_object(Cube(self.app, pos=(x, -s, z)))
@@ -61,12 +67,30 @@ class Scene:
 
             for cx, cz in cube_positions:
                 if abs(rock_x - cx) < s / 2 and abs(rock_z - cz) < s / 2:
-                    self.add_object(Rock(self.app, pos=(rock_x, -1, rock_z)))
-                    rocks_generated += 1
                     break
+            else:
+                self.add_object(Rock(self.app, pos=(rock_x, -1, rock_z)))
+                rocks_generated += 1
 
+
+
+        car_x = random.uniform(-n, n)
+        car_z = random.uniform(-n, n)
+        for cx, cz in cube_positions:
+            if abs(car_x - cx) < s / 2 and abs(car_z - cz) < s / 2:
+                car_x = random.uniform(-n, n)
+                car_z = random.uniform(-n, n)
+                break
+
+        self.add_object(Car(self.app, pos=(car_x, -1, car_z), rot=(0, 0, 0), scale=(0.7, 0.7, 0.7)))
+        self.add_object(House(self.app, pos=(car_x+7, -1, car_z+7), rot=(0, 0, 0), scale=(0.05, 0.05, 0.05)))
+        self.spawn_trees(cube_positions)
+        self.spawn_slenderman(cube_positions)
+    
+    def spawn_trees(self, cube_positions):
         tree_count = 0
-        while tree_count < 4:
+        n, s = 100, 2
+        while tree_count < 50:
             x = random.uniform(-n, n)
             z = random.uniform(-n, n)
 
@@ -76,6 +100,8 @@ class Scene:
                     self.add_object(Arbol(self.app, pos=(x, -1.2, z)))
                     tree_count += 1
                     break
+<<<<<<< HEAD
+=======
         self.spawn_slenderman(cube_positions)
     
     def spawn_trees(self, cube_positions):
@@ -87,19 +113,13 @@ class Scene:
         while tree_count < 4:
             x = random.uniform(-n, n)
             z = random.uniform(-n, n)
+>>>>>>> e0863b995236dd9682fd64fe94e7e21e2527f43e
 
-            colliding = any(abs(x - cx) < s / 2 and abs(z - cz) < s / 2 for cx, cz in cube_positions)
-
-            if not colliding:
-                self.add_object(Tree(self.app, pos=(x, -2, z)))
-                self.add_object(Arbol(self.app, pos=(x, -1.2, z))) 
-                tree_count += 1
-
-        for obj in self.objects:
-            if isinstance(obj, (Tree, Arbol)):
-                obj.update_aabb()
     
     def spawn_slenderman(self, cube_positions):
+<<<<<<< HEAD
+        n, s = 100, 2
+=======
         """
         Spawns a Slenderman in the scene without overlapping with other objects.
 
@@ -107,6 +127,7 @@ class Scene:
             cube_positions (List[Tuple[float, float]]): A list of tuples representing the positions of the cubes in the scene.
         """
         n, s = 50, 2
+>>>>>>> e0863b995236dd9682fd64fe94e7e21e2527f43e
         
         if self.first_slenderman_spawned and self.slenderman:
             self.remove_object(self.slenderman)
@@ -138,7 +159,7 @@ class Scene:
         Slenderman's movement is updated.
         """
         if time.time() - self.slenderman_timer > self.slenderman_interval:
-            n, s = 50, 2
+            n, s = 100, 2
             cube_positions = [(cx, cz) for obj in self.objects if isinstance(obj, Cube) for cx, cz in [(obj.pos[0], obj.pos[2])]]
 
             if self.slenderman:

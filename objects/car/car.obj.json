@@ -1,0 +1,21 @@
+{
+  "created_at": "2024-07-02T00:26:06.104183",
+  "version": "0.1",
+  "mtllibs": [
+    "car.mtl"
+  ],
+  "vertex_buffers": [
+    {
+      "material": "standard",
+      "vertex_format": "T2F_N3F_V3F",
+      "byte_offset": 0,
+      "byte_length": 158592
+    },
+    {
+      "material": "standard1",
+      "vertex_format": "T2F_N3F_V3F",
+      "byte_offset": 158592,
+      "byte_length": 156576
+    }
+  ]
+}

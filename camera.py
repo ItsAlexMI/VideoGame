@@ -4,7 +4,7 @@ import math
 import time
 from aabb import AABB
 from model import *
-from screamer import *
+from videos import *
 
 FOV = 50  
 NEAR = 0.1
@@ -39,6 +39,7 @@ class Camera:
         self.is_moving = False
 
         self.screamer_played = False
+        self.final_played = False
     def rotate(self):
         rel_x, rel_y = pg.mouse.get_rel()
         self.yaw += rel_x * SENSITIVITY
@@ -79,7 +80,6 @@ class Camera:
             if keys[pg.K_d]:
                 move_dir += self.right
 
-            # Verifica colisiones antes de aplicar el movimiento
             if glm.length(move_dir) > 0:
                 move_dir = glm.normalize(move_dir) * velocity
                 new_position = self.position + move_dir
@@ -127,17 +127,26 @@ class Camera:
 
     def check_collisions(self, aabb):
         for obj in self.app.scene.objects:
-            if isinstance(obj, (Tree, Slenderman)):
+            if isinstance(obj, (Slenderman, Car, House)):
                 if aabb.is_colliding(obj.aabb):
                     print("Colision " + obj.__class__.__name__)
                     if isinstance(obj, Slenderman):
                         self.screamer_played = True
-                        time.sleep(2)
                         pg.quit()
-                        subprocess.run([sys.executable, "screamer.py"])
+                        play_screamer()
+                        sys.exit()
+                        
+                    if isinstance(obj, Car):
+                        self.final_played = True
+                        pg.quit()
+                        play_final()
                         sys.exit()
                     return True
+
+                    
+
         return False
+
 
     def get_view_matrix(self):
         return glm.lookAt(self.position, self.position + self.forward, self.up)

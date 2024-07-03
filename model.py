@@ -97,13 +97,32 @@ class ExtendedBaseModel(BaseModel):
 class Cube(ExtendedBaseModel):
     def __init__(self, app, vao_name='cube', tex_id=0, pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
         super().__init__(app, vao_name, tex_id, pos, rot, scale)
-        
-class Tree(ExtendedBaseModel):
-    def __init__(self, app, vao_name='tree', tex_id='tree', pos=(0, 0, 0), rot=(0, 0, 0), scale=(0.002, 0.002, 0.002)):
+
+class Car(ExtendedBaseModel):
+    def __init__(self, app, vao_name='car', tex_id='car', pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
         super().__init__(app, vao_name, tex_id, pos, rot, scale)
+        self.create_aabb()
+
+    def create_aabb(self):
+        aabb_scale_factor = glm.vec3(7, 10, 7)  
+        min_corner = self.pos - (self.scale * aabb_scale_factor) / 2
+        max_corner = self.pos + (self.scale * aabb_scale_factor) / 2
+        self.aabb = AABB(min_corner, max_corner)
+
+    def update_aabb(self):
+        aabb_scale_factor = glm.vec3(7, 10, 7) 
+        self.aabb.min_point = self.pos - (self.scale * aabb_scale_factor) / 2
+        self.aabb.max_point = self.pos + (self.scale * aabb_scale_factor) / 2
 
     def update(self):
-        super().update()  
+        super().update()
+        self.update_aabb()
+
+class Tree(ExtendedBaseModel):
+    def __init__(self, app, vao_name='tree', tex_id='tree', pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
+        super().__init__(app, vao_name, tex_id, pos, rot, scale)
+
+
 class Grass(ExtendedBaseModel):
     def __init__(self, app, vao_name='grass', tex_id='grass', pos=(0, 0, 0), rot=(0, 0, 0), scale=(0.1, 0.1, 0.1)):
         super().__init__(app, vao_name, tex_id, pos, rot, scale)
@@ -121,8 +140,27 @@ class Slenderman(ExtendedBaseModel):
         super().__init__(app, vao_name, tex_id, pos, rot, scale)
 
     def update(self):
-        super().update()  # Actualiza la matriz de modelo y el AABB
+        super().update() 
 
+class House(ExtendedBaseModel):
+    def __init__(self, app, vao_name='house', tex_id='house', pos=(0, 0, 0), rot=(0, 0, 0), scale=(0.2, 0.2, 0.2)):
+        super().__init__(app, vao_name, tex_id, pos, rot, scale)
+        self.create_aabb()
+
+    def create_aabb(self):
+        aabb_scale_factor = glm.vec3(285, 1000, 285)  
+        min_corner = self.pos - (self.scale * aabb_scale_factor) / 2
+        max_corner = self.pos + (self.scale * aabb_scale_factor) / 2
+        self.aabb = AABB(min_corner, max_corner)
+
+    def update_aabb(self):
+        aabb_scale_factor = glm.vec3(285, 1000, 285) 
+        self.aabb.min_point = self.pos - (self.scale * aabb_scale_factor) / 2
+        self.aabb.max_point = self.pos + (self.scale * aabb_scale_factor) / 2
+
+    def update(self):
+        super().update()
+        self.update_aabb()
 
 class SkyBox(BaseModel):
     def __init__(self, app, vao_name='skybox', tex_id='skybox',
