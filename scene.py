@@ -32,10 +32,6 @@ class Scene:
             self.objects.remove(obj)
 
     def load(self):
-<<<<<<< HEAD
-        n, s = 100, 2    
-        grass_density = 0
-=======
         """
         Initializes the scene by creating a grid of cubes, grass, rocks, and trees.
         
@@ -45,8 +41,7 @@ class Scene:
         Finally, it randomly generates tree objects within the grid, ensuring that they do not overlap with the cubes.
         """
         n, s = 50, 2    
-        grass_density = 4
->>>>>>> e0863b995236dd9682fd64fe94e7e21e2527f43e
+        grass_density = 0
         rock_count = 3  
         cube_positions = []
 
@@ -88,9 +83,12 @@ class Scene:
         self.spawn_slenderman(cube_positions)
     
     def spawn_trees(self, cube_positions):
+        """
+        Spawns trees in the scene without overlapping with other objects.
+        """
         tree_count = 0
-        n, s = 100, 2
-        while tree_count < 50:
+        n, s = 50, 2
+        while tree_count < 30:
             x = random.uniform(-n, n)
             z = random.uniform(-n, n)
 
@@ -100,26 +98,11 @@ class Scene:
                     self.add_object(Arbol(self.app, pos=(x, -1.2, z)))
                     tree_count += 1
                     break
-<<<<<<< HEAD
-=======
         self.spawn_slenderman(cube_positions)
     
-    def spawn_trees(self, cube_positions):
-        """
-        Spawns trees in the scene without overlapping with other objects.
-        """
-        tree_count = 0
-        n, s = 50, 2
-        while tree_count < 4:
-            x = random.uniform(-n, n)
-            z = random.uniform(-n, n)
->>>>>>> e0863b995236dd9682fd64fe94e7e21e2527f43e
 
     
     def spawn_slenderman(self, cube_positions):
-<<<<<<< HEAD
-        n, s = 100, 2
-=======
         """
         Spawns a Slenderman in the scene without overlapping with other objects.
 
@@ -127,7 +110,6 @@ class Scene:
             cube_positions (List[Tuple[float, float]]): A list of tuples representing the positions of the cubes in the scene.
         """
         n, s = 50, 2
->>>>>>> e0863b995236dd9682fd64fe94e7e21e2527f43e
         
         if self.first_slenderman_spawned and self.slenderman:
             self.remove_object(self.slenderman)
@@ -159,7 +141,7 @@ class Scene:
         Slenderman's movement is updated.
         """
         if time.time() - self.slenderman_timer > self.slenderman_interval:
-            n, s = 100, 2
+            n, s = 50, 2
             cube_positions = [(cx, cz) for obj in self.objects if isinstance(obj, Cube) for cx, cz in [(obj.pos[0], obj.pos[2])]]
 
             if self.slenderman:
