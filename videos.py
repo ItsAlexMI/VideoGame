@@ -5,6 +5,9 @@ import subprocess
 import sys
 
 def play_screamer():
+    """
+    Initializes the game, plays a screamer video for 7 seconds, and handles event processing.
+    """
     pg.init()
     screen = pg.display.set_mode((0, 0), pg.FULLSCREEN)
     screamer = Video("resources/images/screamer.mp4")
