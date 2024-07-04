@@ -16,6 +16,13 @@ import time
 
 class GraphicsEngine:
     def __init__(self, win_size=(1920, 1080), fullscreen=True):
+        """
+        Initializes the GraphicsEngine class.
+
+        Initializes pygame, loads the ambient sound, sets the volume, and sets the window size and flags.
+        Creates a ModernGL context with depth testing and culling enabled.
+        Initializes the clock, time, delta_time, screamer_played, light, camera, mesh, scene, scene_renderer, and shader_program.
+        """
         pg.init()
         mixer.init()
         mixer.music.load('resources/sounds/ambient.wav')
