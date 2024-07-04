@@ -43,6 +43,8 @@ class VAO:
             program=self.program.programs['default'],
             vbo=self.vbo.vbos['rock'])
 
+
+
         self.vaos['slender'] = self.get_vao(
             program=self.program.programs['default'],
             vbo=self.vbo.vbos['slender'])

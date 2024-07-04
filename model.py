@@ -119,8 +119,9 @@ class Car(ExtendedBaseModel):
         self.update_aabb()
 
 class Tree(ExtendedBaseModel):
-    def __init__(self, app, vao_name='tree', tex_id='tree', pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
+    def __init__(self, app, vao_name='tree', tex_id='tree', pos=(0, 0, 0), rot=(0, 0, 0), scale=(0.04, 0.04, 0.04)):
         super().__init__(app, vao_name, tex_id, pos, rot, scale)
+        self.create_aabb()
 
 
 class Grass(ExtendedBaseModel):
@@ -134,7 +135,22 @@ class Rock(ExtendedBaseModel):
 class Arbol(ExtendedBaseModel):
     def __init__(self, app, vao_name='arbol', tex_id='arbol', pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
         super().__init__(app, vao_name, tex_id, pos, rot, scale)
+        self.create_aabb()
 
+    def create_aabb(self):
+        aabb_scale_factor = glm.vec3(0.2, 1000, 0.2)  
+        min_corner = self.pos - (self.scale * aabb_scale_factor) / 2
+        max_corner = self.pos + (self.scale * aabb_scale_factor) / 2
+        self.aabb = AABB(min_corner, max_corner)
+
+    def update_aabb(self):
+        aabb_scale_factor = glm.vec3(0.2, 1000, 0.2) 
+        self.aabb.min_point = self.pos - (self.scale * aabb_scale_factor) / 2
+        self.aabb.max_point = self.pos + (self.scale * aabb_scale_factor) / 2
+
+    def update(self):
+        super().update()
+        self.update_aabb()
 class Slenderman(ExtendedBaseModel):
     def __init__(self, app, vao_name='slender', tex_id='slender', pos=(0, 0, 0), rot=(0, 0, 0), scale=(0.002, 0.002, 0.002)):
         super().__init__(app, vao_name, tex_id, pos, rot, scale)
@@ -161,6 +177,8 @@ class House(ExtendedBaseModel):
     def update(self):
         super().update()
         self.update_aabb()
+
+
 
 class SkyBox(BaseModel):
     def __init__(self, app, vao_name='skybox', tex_id='skybox',

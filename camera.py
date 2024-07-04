@@ -40,11 +40,15 @@ class Camera:
 
         self.screamer_played = False
         self.final_played = False
+        
     def rotate(self):
         rel_x, rel_y = pg.mouse.get_rel()
         self.yaw += rel_x * SENSITIVITY
         self.pitch -= rel_y * SENSITIVITY
         self.pitch = max(-89, min(89, self.pitch))
+
+    def get_position(self):
+        return self.position
 
     def update_camera_vectors(self):
         yaw, pitch = glm.radians(self.yaw), glm.radians(self.pitch)
@@ -110,7 +114,7 @@ class Camera:
                 jump_progress = (time.time() - self.jump_start_time) / jump_duration
 
                 if jump_progress <= 1.0:
-                    jump_height = 2.0
+                    jump_height = 1.0
                     self.position.y = self.jump_start_y + jump_height * math.sin(jump_progress * math.pi)
                     self.position += move_dir * velocity
                 else:
@@ -127,7 +131,7 @@ class Camera:
 
     def check_collisions(self, aabb):
         for obj in self.app.scene.objects:
-            if isinstance(obj, (Slenderman, Car, House)):
+            if isinstance(obj, (Slenderman, Car, House, Arbol)):
                 if aabb.is_colliding(obj.aabb):
                     print("Colision " + obj.__class__.__name__)
                     if isinstance(obj, Slenderman):

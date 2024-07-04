@@ -23,6 +23,7 @@ class VBO:
 
         self.vbos['house'] = HouseVBO(ctx)
 
+
     def destroy(self):
         [vbo.destroy() for vbo in self.vbos.values()]
 
@@ -129,6 +130,9 @@ class TreeVBO(BaseVBO):
         vertex_data = obj.vertices
         vertex_data = np.array(vertex_data, dtype='f4')
         return vertex_data
+
+
+
 
 class GrassVBO(BaseVBO):
     def __init__(self, ctx):

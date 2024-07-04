@@ -78,7 +78,7 @@ class GraphicsEngine:
             self.camera.update()
             self.scene.update()
 
-            if self.time > 30 and not self.screamer_played:
+            if self.time > 60 and not self.screamer_played:
                 self.screamer_played = True
                 pg.quit()
                 play_screamer()

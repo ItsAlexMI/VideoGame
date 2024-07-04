@@ -25,8 +25,7 @@ class Texture:
         self.textures['slender'] = self.get_texture(path='objects\slenderman\Tex_0666_0.PNG')
         self.textures['car'] = self.get_texture(path='objects/car/1588147794306-removebg-preview.png')
         self.textures['house'] = self.get_texture(path='objects\house\house_04_diff.png')
-
-        print(self.textures['tree'])
+    
 
     def get_depth_texture(self):
         depth_texture = self.ctx.depth_texture(self.app.WIN_SIZE)
