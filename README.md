@@ -67,3 +67,10 @@ EdwinJSA
 Press the button for redirect to video
 
 [![Demo Out of the Woods](https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=odJS5nwCBIw)
+
+
+## Images of the game
+<img src="./images/a.png" alt="Descripción de la imagen" width="600">
+<img src="./images/s.png" alt="Descripción de la imagen" width="600">
+<img src="./images/d.png" alt="Descripción de la imagen" width="600">
+<img src="./images/w.png" alt="Descripción de la imagen" width="600">
