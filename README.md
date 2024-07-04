@@ -8,7 +8,7 @@ Out of the Woods is a forest simulator inspired by the Slenderman video game. In
 ## :page_facing_up: How to install
 - :white_check_mark: Verify that Python is installed on our browser
 ```bash
-python --version
+python --version 
 ```
 
 
