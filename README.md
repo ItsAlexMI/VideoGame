@@ -1,4 +1,3 @@
-
 # Out of the woods.
 
 ## :computer:Description
@@ -8,29 +7,57 @@ Out of the Woods is a forest simulator inspired by the Slenderman video game. In
 
 ## :page_facing_up: How to install
 - :white_check_mark: Verify that Python is installed on our browser
-```bash
+bash
 python -version
-```
+
+
+- :white_check_mark: Install the virtual environment library
+bash
+pip install virtualenv
+
+
 
 - :camera: Clone the repository
-```bash
+bash
 git clone https://github.com/ItsAlexMI/VideoGame.git
-```
+
 
 - :floppy_disk: create a environment
-```bash
+bash
 python -m venv env
 python ./env/Scripts/activate
-```
+
 
 -  	:cd: install the dependencies necessary to run the project
 
-```bash
+bash
 pip install -r requirements.txt
-```
+
 
 - :arrow_forward: After installing the dependencies we can run the project, this must be done from the menu.py file
 
-```bash
+bash
 python menu.py
-```
+
+
+
+## Technologies
+
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white) 
+![OpenGL](https://img.shields.io/badge/OpenGL-5586A4?style=for-the-badge&logo=opengl&logoColor=white)
+
+## Contributors
+ItsAlexMI
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github)](https://github.com/ItsAlexMI)
+
+EdwinJSA
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github)](https://github.com/EdwinJSA)
+
+CamilaU20
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github)](https://github.com/CamilaU20)
+
+
+## Game Demo
+Press the button for redirect to video
+
+[![Demo Out of the Woods](https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=odJS5nwCBIw)
