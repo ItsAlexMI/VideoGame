@@ -13,33 +13,32 @@ python -version
 
 
 - :white_check_mark: Install the virtual environment library
-bash
+```bash
 pip install virtualenv
-
+```
 
 
 - :camera: Clone the repository
-bash
+```bash
 git clone https://github.com/ItsAlexMI/VideoGame.git
-
+```
 
 - :floppy_disk: create a environment
-bash
+```bash
 python -m venv env
 python ./env/Scripts/activate
-
+```
 
 -  	:cd: install the dependencies necessary to run the project
 
-bash
+```bash
 pip install -r requirements.txt
-
+```
 
 - :arrow_forward: After installing the dependencies we can run the project, this must be done from the menu.py file
-
-bash
+```bash
 python menu.py
-
+```
 
 
 ## Technologies
