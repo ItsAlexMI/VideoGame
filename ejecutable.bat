@@ -12,3 +12,6 @@ python menu.py
 
 REM Desactivar el entorno virtual al finalizar
 deactivate
+
+REM Cerrar la ventana del símbolo del sistema automáticamente
+exit
