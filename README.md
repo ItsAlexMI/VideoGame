@@ -62,6 +62,9 @@ ItsAlexMI
 EdwinJSA
 [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github)](https://github.com/EdwinJSA)
 
+CamilaU20
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github)](https://github.com/CamilaU20)
+
 
 ## Game Demo
 Press the button for redirect to video
