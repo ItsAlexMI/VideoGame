@@ -14,6 +14,15 @@ SENSITIVITY = 0.03
 
 class Camera:
     def __init__(self, app, position=(0, 0, 4), yaw=-90, pitch=0):
+        """
+        Initializes a new instance of the Camera class.
+
+        Args:
+            app (App): The application instance.
+            position (tuple, optional): The initial position of the camera. Defaults to (0, 0, 4).
+            yaw (float, optional): The initial yaw angle of the camera. Defaults to -90.
+            pitch (float, optional): The initial pitch angle of the camera. Defaults to 0.
+        """
         self.app = app
         self.aspect_ratio = app.WIN_SIZE[0] / app.WIN_SIZE[1]
         self.position = glm.vec3(position)
@@ -42,6 +51,9 @@ class Camera:
         self.final_played = False
         
     def rotate(self):
+        """
+        Updates the yaw and pitch angles based on the relative mouse movement.
+        """
         rel_x, rel_y = pg.mouse.get_rel()
         self.yaw += rel_x * SENSITIVITY
         self.pitch -= rel_y * SENSITIVITY
@@ -51,6 +63,10 @@ class Camera:
         return self.position
 
     def update_camera_vectors(self):
+        """
+        This function calculates the forward, right, and up vectors of the camera based on the current yaw and pitch angles.
+        It uses the glm library to perform the calculations.
+        """
         yaw, pitch = glm.radians(self.yaw), glm.radians(self.pitch)
 
         self.forward.x = glm.cos(yaw) * glm.cos(pitch)
@@ -62,6 +78,12 @@ class Camera:
         self.up = glm.normalize(glm.cross(self.right, self.forward))
 
     def update(self):
+        """
+        This function first calls the `move` method to update the camera's position based on user input.
+        Then, it calls the `rotate` method to update the camera's yaw and pitch angles based on the relative mouse movement.
+        After that, it calls the `update_camera_vectors` method to recalculate the camera's forward, right, and up vectors based on the updated yaw and pitch angles.
+        Finally, it calls the `get_view_matrix` method to update the camera's view matrix based on its position, rotation, and other properties.
+        """
         self.move()
         self.rotate()
         self.update_camera_vectors()
@@ -130,6 +152,9 @@ class Camera:
                         self.position.y = ground_level
 
     def check_collisions(self, aabb):
+        """
+        Checks for collisions between the player's AABB and specific objects in the scene.
+        """
         for obj in self.app.scene.objects:
             if isinstance(obj, (Slenderman, Car, House, Arbol)):
                 if aabb.is_colliding(obj.aabb):
@@ -153,10 +178,22 @@ class Camera:
 
 
     def get_view_matrix(self):
+        """
+        Returns the view matrix for the camera.
+
+        This function calculates the view matrix for the camera based on its position, forward vector, and up vector.
+        It uses the `glm.lookAt` function to compute the view matrix.
+        """
         return glm.lookAt(self.position, self.position + self.forward, self.up)
 
     def get_projection_matrix(self):
+        """
+        This function calculates the projection matrix for the camera based on the field of view (FOV), aspect ratio, near plane distance, and far plane distance.
+        """
         return glm.perspective(glm.radians(FOV), self.aspect_ratio, NEAR, FAR)
     
     def get_flashlight_position(self):
+        """
+        This function calculates the flashlight's position based on the camera's position, forward vector, and a fixed offset.
+        """
         return self.position + self.forward * glm.vec3(0, 0, -1)
